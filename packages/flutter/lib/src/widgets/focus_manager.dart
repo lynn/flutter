@@ -646,7 +646,7 @@ class FocusNode with DiagnosticableTreeMixin, ChangeNotifier {
         "Tried to get the size of a focus node that didn't have its context set yet.\n"
         'The context needs to be set before trying to evaluate traversal policies. This '
         'is typically done with the attach method.');
-    return context.findRenderObject().semanticBounds.size;
+    return rect.size;
   }
 
   /// Returns the global offset to the upper left corner of the attached
@@ -670,8 +670,7 @@ class FocusNode with DiagnosticableTreeMixin, ChangeNotifier {
         'The context needs to be set before trying to evaluate traversal policies. This '
         'is typically done with the attach method.');
     final RenderObject object = context.findRenderObject();
-    final Offset globalOffset = MatrixUtils.transformPoint(object.getTransformTo(null), object.semanticBounds.topLeft);
-    return globalOffset & object.semanticBounds.size;
+    return MatrixUtils.transformRect(object.getTransformTo(null), object.semanticBounds);
   }
 
   /// Removes the focus on this node by moving the primary focus to another node.
